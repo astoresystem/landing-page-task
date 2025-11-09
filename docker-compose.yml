@@ -1,9 +1,13 @@
-version: '3.8'
-
 services:
   php-apache:
-    image: php:8.1-apache
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: landing-php
+    ports:
+      - 80:80
     volumes:
-      - ./:/var/www/html
+      - ./index.html:/var/www/html/index.html
+      - ./contact.php:/var/www/html/contact.php
+      - ./styles/:/var/www/html/styles
     restart: always

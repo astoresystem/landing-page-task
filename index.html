@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=2" />
+  <meta name="viewport" content="initial-scale=1" />
   <title></title>
   <link rel="stylesheet" href="styles/main.css" />
 </head>
@@ -22,13 +22,34 @@
     <textarea id="message" name="message" rows="1"></textarea><br />
     <button type="submit">Send</button>
   </form>
-  <div id="responseMsg"></div>
+  <div id="responseMsg">
+
+  </div>
 </main>
 
 <script>
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', e => {
     e.preventDefault();
+    const params = {
+      name: document.querySelector('#name').value,
+      email: document.querySelector('#email').value,
+      message: document.querySelector('#message').value
+    }
+
+    const http = new XMLHttpRequest();
+    http.open('POST', '/contact.php');
+    http.setRequestHeader('Content-type', 'application/json');
+    http.send(JSON.stringify(params));
+    http.onload = function() {
+      const response = JSON.parse(http.responseText);
+
+      if (response.status && response.status === 'success') {
+        document.querySelector('#responseMsg').innerHTML = response.message;
+      } else {
+        document.querySelector('#responseMsg').innerHTML = 'We need help on the backend.';
+      }
+    }
   });
 </script>
 </body>
