@@ -2,8 +2,11 @@
 <html lang="pl">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=2" />
-  <title></title>
+  <meta name="viewport" content="initial-scale=1" />
+  <title>Form Saver</title>
+  <meta name="description" content="This page collects contact and feedback">
+  <meta name="keywords" content="contact, feedback, email, message">
+  <meta name="robots" content="index">
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
@@ -14,21 +17,42 @@
 
 <main>
   <form id="contactForm" method="POST">
-    <label>Name:</label><br />
+    <label for="name">Name:</label><br />
     <input type="text" id="name" name="name" /><br />
-    <label>Email</label><br />
+    <label for="email">Email</label><br />
     <input type="email" id="email" name="email" /><br />
-    <label>Message</label><br />
+    <label for="message">Message</label><br />
     <textarea id="message" name="message" rows="1"></textarea><br />
     <button type="submit">Send</button>
   </form>
-  <div id="responseMsg"></div>
+  <div id="responseMsg">
+
+  </div>
 </main>
 
 <script>
   const form = document.getElementById('contactForm');
   form.addEventListener('submit', e => {
     e.preventDefault();
+    const params = {
+      name: document.querySelector('#name').value,
+      email: document.querySelector('#email').value,
+      message: document.querySelector('#message').value
+    }
+
+    const http = new XMLHttpRequest();
+    http.open('POST', '/contact.php');
+    http.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+    http.send(JSON.stringify(params));
+    http.onload = function() {
+      const response = JSON.parse(http.responseText);
+
+      if (response.status && response.message) {
+        document.querySelector('#responseMsg').innerHTML = `${response.message}`;
+      } else {
+        document.querySelector('#responseMsg').innerHTML = 'Something went wrong.';
+      }
+    }
   });
 </script>
 </body>

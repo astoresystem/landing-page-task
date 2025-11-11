@@ -19,6 +19,20 @@ Run in the terminal:
    - besides the form data, also save the submission date.
 4. Perform a brief analysis of the page regarding performance, accessibility, and SEO (e.g., using Lighthouse) and describe what and how you improved.
 
+#### Analysis of point 4.
+Performance:
+- It is simple light-weight, fast loading page with one huge big image, fortunately cached by browser itself.
+
+Accessibility:
+- Accessibility is poor, no aria labels, defined tab-indexes. No WCAG switches for <span style="color: yellow">contrast</span> or HUGE FONT
+- Bad layout design: 
+  - <span style="color: #000001">weak contrast</span><span style="color: white"> (apart from the blinding white fields) 
+  - <span style="font-size: 8px">too small</span> font and <span style="font-family: 'Comic Sans MS', cursive, sans-serif">toy font type</span>
+  -barely visible action button
+  - I am not good at mobile designs, but there are big fields as well as the button.
+  
+- SEO was improved by adding title and meta tags
+
 ---
 
 ## Structure
