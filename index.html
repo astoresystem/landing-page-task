@@ -14,11 +14,11 @@
 
 <main>
   <form id="contactForm" method="POST">
-    <label>Name:</label><br />
+    <label for="name">Name:</label><br />
     <input type="text" id="name" name="name" /><br />
-    <label>Email</label><br />
+    <label for="email">Email</label><br />
     <input type="email" id="email" name="email" /><br />
-    <label>Message</label><br />
+    <label for="message">Message</label><br />
     <textarea id="message" name="message" rows="1"></textarea><br />
     <button type="submit">Send</button>
   </form>
@@ -39,15 +39,15 @@
 
     const http = new XMLHttpRequest();
     http.open('POST', '/contact.php');
-    http.setRequestHeader('Content-type', 'application/json');
+    http.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     http.send(JSON.stringify(params));
     http.onload = function() {
       const response = JSON.parse(http.responseText);
 
-      if (response.status && response.status === 'success') {
-        document.querySelector('#responseMsg').innerHTML = response.message;
+      if (response.status && response.message) {
+        document.querySelector('#responseMsg').innerHTML = `${response.message}`;
       } else {
-        document.querySelector('#responseMsg').innerHTML = 'We need help on the backend.';
+        document.querySelector('#responseMsg').innerHTML = 'Something went wrong.';
       }
     }
   });

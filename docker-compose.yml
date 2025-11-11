@@ -4,10 +4,17 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: landing-php
+    environment:
+      APP_ENV: #dev
     ports:
       - 80:80
+      - 443:443
     volumes:
       - ./index.html:/var/www/html/index.html
       - ./contact.php:/var/www/html/contact.php
       - ./styles/:/var/www/html/styles
+      - ./files/:/var/www/html/files
+    command: >
+      bash -c "chown 33:33 /var/www/html/files 
+      && apache2-foreground"
     restart: always
